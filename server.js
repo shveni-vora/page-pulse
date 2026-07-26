@@ -80,7 +80,11 @@ app.get('/audit', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch or parse the URL', details: err.message });
   }
 });
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+  });
+}
+module.exports = { normalizeUrl, parseAuditData };
